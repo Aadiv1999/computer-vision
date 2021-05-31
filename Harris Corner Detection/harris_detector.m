@@ -1,5 +1,5 @@
 clc
-clear
+% clear
 close all;
 
 % path = "C:\Users\aadiv\Documents\Projects\Computer Vision\images\corners.jpg";
@@ -21,8 +21,8 @@ bw = imbinarize(gray,level)*255;
 ixMask = [1,0,-1; 2,0,-2; 1,0,-1];
 iyMask = [1,2,1; 0,0,0; -1,-2,-1];
 
-iX = conv2(bw, ixMask,'same');
-iY = conv2(bw, iyMask,'same');
+iX = convolution2D(bw, ixMask);
+iY = convolution2D(bw, iyMask);
 
 iX = bwareaopen(iX,50)*255;
 iY = bwareaopen(iY,50)*255;
@@ -52,9 +52,9 @@ k = 0.04; % harris K
 thresh = 500000000; % harris thresh
 gFilter = fspecial('Gaussian', n, 1);
 R = 0;
-wX2 = conv2(iX2, gFilter,'same');
-wY2 = conv2(iY2, gFilter,'same');
-wXY = conv2(iXY, gFilter,'same');
+wX2 = convolution2D(iX2, gFilter);
+wY2 = convolution2D(iY2, gFilter);
+wXY = convolution2D(iXY, gFilter);
 
 corners = [];
 
@@ -69,16 +69,7 @@ for i = 1:r
     end
 end
 
-figure;
-subplot(1,2,1)
-imshow(img);
-axis on;
-title("Original Image");
-subplot(1,2,2)
-imshow(img);hold on;
-plot(corners(:,2),corners(:,1),'+','Color','r');
-title("Harris Corner Detection");
-axis on;
+
 
 gaussMat = [];
 for i=1:n
@@ -91,4 +82,15 @@ figure;
 
 % visualise Gaussain Mask
 surf(x,y,gFilter);hold on;shading interp;
+
+figure;
+subplot(1,2,1)
+imshow(img);
+axis on;
+title("Original Image");
+subplot(1,2,2)
+imshow(img);hold on;
+plot(corners(:,2),corners(:,1),'+','Color','r');
+title("Harris Corner Detection");
+axis on;
 
