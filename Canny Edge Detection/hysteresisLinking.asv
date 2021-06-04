@@ -1,0 +1,21 @@
+function [hLinked] = hysteresisLinking(nms, lowThresh, highThresh)
+
+hLinked = nms;
+[row,col] = size(nms);
+weakEdges = [];
+strongEdges = [];
+for i=1:row
+    for j=1:col
+        if( nms(i,j) >= highThresh)
+            nms(i,j) = 255;
+       
+        elseif( nms(i,j) <= lowThresh)
+            nms(i,j) = 0;
+        else
+            continue;
+        end
+    end
+end
+            
+
+end

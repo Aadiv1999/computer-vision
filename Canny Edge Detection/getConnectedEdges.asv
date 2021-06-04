@@ -1,0 +1,23 @@
+function [hLinked] = getConnectedEdges(hLinked, row, col)
+
+
+[r,c] = size(hLinked);
+if( (row>1 && row<r) && (col>1 && col<c) ) % check for edge condition
+    for i=-1:1 % iterate through 8 neighbours
+        for j=-1:1
+            if ( (i~=0 && j~=0) )
+
+                if(hLinked(row+i,col+j) == 25)
+                    hLinked(row,col) = 255;
+                elseif(hLinked(row+i,col+i) == 0)
+                    hLinked(row,col) = 0;
+                else
+                    hLinked = getConnectedEdges(hLinked, row+i, col+i);
+                end
+
+            end
+        end
+    end
+end
+
+end
