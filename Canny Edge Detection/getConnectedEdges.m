@@ -3,8 +3,8 @@ function [hLinked] = getConnectedEdges(hLinked, row, col)
 
 [r,c] = size(hLinked);
  % check for edge condition
-    for i=-2:2 % iterate through 8 neighbours
-        for j=-2:2
+    for i=-1:1 % iterate through 8 neighbours
+        for j=-1:1
             
                 
             if( (row+i>1 && row+i<r) && (col+j>1 && col+j<c) )

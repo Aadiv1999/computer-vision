@@ -2,8 +2,9 @@ clc
 clear
 close all
 
-path = "C:\Users\aadiv\Documents\Projects\Computer Vision\images\corners.jpg";
-% path = "C:\Users\aadiv\Documents\Projects\Computer Vision\images\lena.tif";
+path = "C:\Users\aadiv\Documents\Projects\Computer Vision\images\lena.tif";
+% path = "C:\Users\aadiv\Documents\Projects\Computer Vision\images\test2.jpg";
+path = "C:\Users\aadiv\Documents\Projects\Computer Vision\images\chessboard.jpg";
 
 
 img = imread(path);
@@ -11,27 +12,28 @@ img = imread(path);
 
 gray = rgb2gray(img);
 
-
+% kernel size
 n = 3;
 gFilter = fspecial('Gaussian', n, 3);
 
-ixMask = [1,0,-1; 2,0,-2; 1,0,-1];
-iyMask = [1,2,1; 0,0,0; -1,-2,-1];
+
 
 S = convolution2D(gray,gFilter);
-
+% S = gray;
+ixMask = [1,0,-1; 1,0,-1; 1,0,-1];
+iyMask = [1,1,1; 0,0,0; -1,-1,-1];
 % figure;
 % imshow(S,[]);
 dSX = convolution2D(S,ixMask);
 dSY = convolution2D(S,iyMask);
 
-% figure;
-% subplot(1,2,1);
-% imshow(dSX,[]);
-% title("Magnitudes in X");
-% subplot(1,2,2);
-% imshow(dSY,[]);
-% title("Magnitudes in Y");
+figure;
+subplot(1,2,1);
+imshow(dSX,[]);
+title("Magnitudes in X");
+subplot(1,2,2);
+imshow(dSY,[]);
+title("Magnitudes in Y");
 
 dS = sqrt(dSX.^2 + dSY.^2);
 dTheta = atan2(dSY,dSX).*180/pi;
@@ -40,19 +42,26 @@ dTheta = atan2(dSY,dSX).*180/pi;
 % imshow(dS,[]);
 % title("Gradient Magnitude");
 
+
 % non maxima suppression
 nms = nonMaximaSuppressionCanny(dS,dTheta);
+
 
 % figure
 % imshow(nms,[]);
 % title("Non Maxima Suppression");
 
-[thresh,weakEdges,strongEdges] = getWeakEdges(nms, 50, 80);
+
+% get weak edges
+[thresh,weakEdges,strongEdges] = getWeakEdges(nms, 5, 20);
+
 
 % figure
 % imshow(thresh,[]);
 % title("Double Thresholding");
 
+
+% get connected edges
 set(0,'RecursionLimit',100000)
 for i=1:length(strongEdges)
     if( (strongEdges(i,1)>1 && strongEdges(i,2)>1) &&...
