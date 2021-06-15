@@ -10,6 +10,7 @@ This repo contains the inplementation of the following Computer Vision/Image Pro
 ![Canny Output](https://github.com/Aadiv1999/computer-vision/blob/main/Outputs/Canny%20Edge%20Detection.jpg)
 
 3. Histogram of Oriented Gradients
+![Canny Output](https://github.com/Aadiv1999/computer-vision/blob/main/Outputs/Histogram%20of%20Oriented%20Gradients.jpg)
 4. Optical Flow
 
 
