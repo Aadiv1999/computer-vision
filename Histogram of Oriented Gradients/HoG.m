@@ -74,7 +74,7 @@ for i=1:8
 end
 title("Visualisation");
 
-disp("Histogram of Oriented Gradients");
+disp("Histogram of Oriented Gradients is displayed");
 
 
 
